@@ -43,6 +43,20 @@ struct ConfigurableWebView : View {
 
 ```
 
+## Camera and Microphone Permissions
+
+SkipWeb includes `WebChromeClient` support on Android, which enables web pages to request camera and microphone permissions. The library automatically handles permission requests from embedded web content.
+
+**Note**: Make sure your app has the necessary permissions declared in `AndroidManifest.xml`:
+
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+The `WebChromeClient` implementation automatically grants camera and microphone permissions when requested by web pages.
+
 ## JavaScript
 
 JavaScript can be executed against the browser with:

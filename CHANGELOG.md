@@ -1,3 +1,8 @@
+## Unreleased
+
+  - Added WebChromeClient support for Android to handle camera/microphone permissions
+  - Added onPermissionRequest handler that automatically grants requested permissions
+
 ## 0.5.1
 
 Released 2024-09-03

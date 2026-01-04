@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 
 import android.webkit.WebViewClient
+import android.webkit.WebChromeClient
+import android.webkit.PermissionRequest
 import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -264,6 +266,14 @@ struct WebViewClient : android.webkit.WebViewClient {
     }
 }
 
+struct WebChromeClient : android.webkit.WebChromeClient {
+    override func onPermissionRequest(request: PermissionRequest) {
+        logger.log("WebChromeClient: onPermissionRequest for resources: \(request.resources)")
+        // Grant all requested permissions (camera, microphone, etc.)
+        request.grant(request.resources)
+    }
+}
+
 #endif
 
 @available(macOS 14.0, iOS 17.0, *)
@@ -289,6 +299,7 @@ extension WebView : ViewRepresentable {
         webEngine.webView.setBackgroundColor(0x000000) // prevents screen flashing: https://issuetracker.google.com/issues/314821744
         webEngine.webView.addJavascriptInterface(MessageHandlerRouter(webEngine: webEngine), "skipWebAndroidMessageHandler")
         webEngine.engineDelegate = WebEngineDelegate(webEngine.configuration, WebViewClient(webView: self))
+        webEngine.webView.setWebChromeClient(WebChromeClient())
 
         //settings.setAlgorithmicDarkeningAllowed(boolean allow)
         //settings.setAllowContentAccess(boolean allow)
