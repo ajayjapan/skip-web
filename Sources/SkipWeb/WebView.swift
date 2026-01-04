@@ -267,6 +267,10 @@ struct WebViewClient : android.webkit.WebViewClient {
 }
 
 struct WebChromeClient : android.webkit.WebChromeClient {
+    override init() {
+        super.init()
+    }
+    
     override func onPermissionRequest(request: PermissionRequest) {
         logger.log("WebChromeClient: onPermissionRequest for resources: \(request.resources)")
         // Grant all requested permissions (camera, microphone, etc.)
