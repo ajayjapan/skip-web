@@ -297,6 +297,12 @@ extension WebView : ViewRepresentable {
         settings.setAllowContentAccess(true)
         settings.setAllowFileAccess(true)
         settings.setDomStorageEnabled(true)
+        // testing additional permissions
+        settings.setMediaPlaybackRequiresUserGesture(false);  // For auto-play of video/audio
+        settings.setLoadWithOverviewMode(true);
+        settings.setUseWideViewPort(true);
+        settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+      
         if (config.customUserAgent != nil ) {
             settings.setUserAgentString(config.customUserAgent)
         }
