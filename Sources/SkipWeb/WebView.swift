@@ -266,7 +266,7 @@ struct WebViewClient : android.webkit.WebViewClient {
     }
 }
 
-struct WebChromeClient : android.webkit.WebChromeClient {
+struct PermissiveWebChromeClient : android.webkit.WebChromeClient {
     override init() {
         super.init()
     }
@@ -309,7 +309,7 @@ extension WebView : ViewRepresentable {
         webEngine.webView.setBackgroundColor(0x000000) // prevents screen flashing: https://issuetracker.google.com/issues/314821744
         webEngine.webView.addJavascriptInterface(MessageHandlerRouter(webEngine: webEngine), "skipWebAndroidMessageHandler")
         webEngine.engineDelegate = WebEngineDelegate(webEngine.configuration, WebViewClient(webView: self))
-        webEngine.webView.setWebChromeClient(WebChromeClient())
+        webEngine.webView.setWebChromeClient(PermissiveWebChromeClient())
 
         //settings.setAlgorithmicDarkeningAllowed(boolean allow)
         //settings.setAllowContentAccess(boolean allow)
