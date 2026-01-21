@@ -301,6 +301,7 @@ extension WebView : ViewRepresentable {
         settings.setMediaPlaybackRequiresUserGesture(false);  // For auto-play of video/audio
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
+        settings.setDatabaseEnabled(true);
       
         if (config.customUserAgent != nil ) {
             settings.setUserAgentString(config.customUserAgent)
