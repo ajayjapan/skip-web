@@ -266,6 +266,7 @@ struct WebViewClient : android.webkit.WebViewClient {
     }
     
     override func onReceivedSslError(view: PlatformWebView, handler: android.webkit.SslErrorHandler, error: android.net.http.SslError) {
+      logger.log(">>> SSL Error - calling handler.proceed()")
       handler.proceed()
     }
 }
