@@ -264,6 +264,10 @@ struct WebViewClient : android.webkit.WebViewClient {
         }
         return result
     }
+    
+    override func onReceivedSslError(view: PlatformWebView, handler: android.webkit.SslErrorHandler, error: android.net.http.SslError) {
+      handler.proceed()
+    }
 }
 
 struct PermissiveWebChromeClient : android.webkit.WebChromeClient {
