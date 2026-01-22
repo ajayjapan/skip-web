@@ -308,6 +308,9 @@ extension WebView : ViewRepresentable {
         settings.setUseWideViewPort(true)
         settings.setDatabaseEnabled(true)
         settings.setMixedContentMode(0)
+        settings.setBlockNetworkLoads(false)
+        settings.setBlockNetworkImage(false)
+        settings.setCacheMode(2)
 
         if (config.customUserAgent != nil ) {
           settings.setUserAgentString(config.customUserAgent)
