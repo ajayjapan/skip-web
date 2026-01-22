@@ -298,13 +298,14 @@ extension WebView : ViewRepresentable {
         settings.setAllowFileAccess(true)
         settings.setDomStorageEnabled(true)
         // testing additional permissions
-        settings.setMediaPlaybackRequiresUserGesture(false);  // For auto-play of video/audio
-        settings.setLoadWithOverviewMode(true);
-        settings.setUseWideViewPort(true);
-        settings.setDatabaseEnabled(true);
-      
+        settings.setMediaPlaybackRequiresUserGesture(false)  // For auto-play of video/audio
+        settings.setLoadWithOverviewMode(true)
+        settings.setUseWideViewPort(true)
+        settings.setDatabaseEnabled(true)
+        settings.setMixedContentMode(0)
+
         if (config.customUserAgent != nil ) {
-            settings.setUserAgentString(config.customUserAgent)
+          settings.setUserAgentString(config.customUserAgent)
         }
         webEngine.webView.setBackgroundColor(0x000000) // prevents screen flashing: https://issuetracker.google.com/issues/314821744
         webEngine.webView.addJavascriptInterface(MessageHandlerRouter(webEngine: webEngine), "skipWebAndroidMessageHandler")
