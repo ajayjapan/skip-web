@@ -314,7 +314,7 @@ extension WebView : ViewRepresentable {
           settings.setUserAgentString(config.customUserAgent)
         }
 
-        webEngine.webView.setWebViewClient(WebViewClient(webView: self))
+        webEngine.webView.setWebViewClient(android.webkit.WebViewClient())
         webEngine.webView.setWebChromeClient(PermissiveWebChromeClient())
         
         webEngine.webView.setBackgroundColor(0x000000)
