@@ -272,6 +272,11 @@ struct WebViewClient : android.webkit.WebViewClient {
 }
 
 struct PermissiveWebChromeClient : android.webkit.WebChromeClient {
+    override init() {
+        super.init()
+        logger.log("PermissiveWebChromeClient: initialized")
+    }
+  
     override func onPermissionRequest(request: PermissionRequest) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             request.grant(request.getResources())
