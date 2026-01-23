@@ -274,12 +274,21 @@ struct WebViewClient : android.webkit.WebViewClient {
 struct PermissiveWebChromeClient : android.webkit.WebChromeClient {
     override init() {
         super.init()
+        logger.log("PermissiveWebChromeClient: initialized")
     }
     
     override func onPermissionRequest(request: PermissionRequest) {
-        logger.log("WebChromeClient: onPermissionRequest for resources: \(request.resources)")
-        // Grant all requested permissions (camera, microphone, etc.)
-        request.grant(request.resources)
+        logger.log("WebChromeClient: onPermissionRequest for resources: \(request.getResources())")
+        request.grant(request.getResources())
+    }
+    
+    override func onConsoleMessage(consoleMessage: android.webkit.ConsoleMessage) -> Bool {
+        logger.log("JS Console [\(consoleMessage.messageLevel())]: \(consoleMessage.message()) at \(consoleMessage.sourceId()):\(consoleMessage.lineNumber())")
+                   return true
+    }
+    
+    override func onProgressChanged(view: PlatformWebView, newProgress: Int) {
+        logger.log("WebChromeClient: progress \(newProgress)%")
     }
 }
 
