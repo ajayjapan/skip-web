@@ -314,12 +314,11 @@ extension WebView : ViewRepresentable {
           settings.setUserAgentString(config.customUserAgent)
         }
 
-        webEngine.webView.setWebViewClient(android.webkit.WebViewClient())
         webEngine.webView.setWebChromeClient(PermissiveWebChromeClient())
-        
+
         webEngine.webView.setBackgroundColor(0x000000)
         webEngine.webView.addJavascriptInterface(MessageHandlerRouter(webEngine: webEngine), "skipWebAndroidMessageHandler")
-        webEngine.engineDelegate = WebEngineDelegate(webEngine.configuration, WebViewClient(webView: self))
+        webEngine.engineDelegate = WebEngineDelegate(webEngine.configuration, android.webkit.WebViewClient())
 
         //settings.setAlgorithmicDarkeningAllowed(boolean allow)
         //settings.setAllowContentAccess(boolean allow)
