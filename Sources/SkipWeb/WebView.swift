@@ -279,12 +279,14 @@ struct PermissiveWebChromeClient : android.webkit.WebChromeClient {
     
     override func onPermissionRequest(request: PermissionRequest) {
         logger.log("WebChromeClient: onPermissionRequest for resources: \(request.getResources())")
-        request.grant(request.getResources())
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            request.grant(request.getResources())
+        }
     }
     
     override func onConsoleMessage(consoleMessage: android.webkit.ConsoleMessage) -> Bool {
         logger.log("JS Console [\(consoleMessage.messageLevel())]: \(consoleMessage.message()) at \(consoleMessage.sourceId()):\(consoleMessage.lineNumber())")
-                   return true
+        return true
     }
     
     override func onProgressChanged(view: PlatformWebView, newProgress: Int) {
@@ -307,27 +309,17 @@ extension WebView : ViewRepresentable {
         #if SKIP
         let settings = webEngine.webView.settings
         settings.setJavaScriptEnabled(config.javaScriptEnabled)
-        settings.setSafeBrowsingEnabled(false)
-        settings.setAllowContentAccess(true)
-        settings.setAllowFileAccess(true)
-        settings.setDomStorageEnabled(true)
-        // testing additional permissions
-        settings.setMediaPlaybackRequiresUserGesture(false)  // For auto-play of video/audio
-        settings.setLoadWithOverviewMode(true)
-        settings.setUseWideViewPort(true)
-        settings.setDatabaseEnabled(true)
-        settings.setMixedContentMode(2) // Always Allow
-        settings.setBlockNetworkLoads(false)
-        settings.setBlockNetworkImage(false)
-        settings.setCacheMode(2)
 
         if (config.customUserAgent != nil ) {
           settings.setUserAgentString(config.customUserAgent)
         }
-        webEngine.webView.setBackgroundColor(0x000000) // prevents screen flashing: https://issuetracker.google.com/issues/314821744
+
+        webEngine.webView.setWebViewClient(WebViewClient(webView: self))
+        webEngine.webView.setWebChromeClient(PermissiveWebChromeClient())
+        
+        webEngine.webView.setBackgroundColor(0x000000)
         webEngine.webView.addJavascriptInterface(MessageHandlerRouter(webEngine: webEngine), "skipWebAndroidMessageHandler")
         webEngine.engineDelegate = WebEngineDelegate(webEngine.configuration, WebViewClient(webView: self))
-        webEngine.webView.setWebChromeClient(PermissiveWebChromeClient())
 
         //settings.setAlgorithmicDarkeningAllowed(boolean allow)
         //settings.setAllowContentAccess(boolean allow)
