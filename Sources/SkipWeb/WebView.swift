@@ -316,7 +316,7 @@ extension WebView : ViewRepresentable {
         settings.setLoadWithOverviewMode(true)
         settings.setUseWideViewPort(true)
         settings.setDatabaseEnabled(true)
-        settings.setMixedContentMode(0)
+        settings.setMixedContentMode(2) // Always Allow
         settings.setBlockNetworkLoads(false)
         settings.setBlockNetworkImage(false)
         settings.setCacheMode(2)
