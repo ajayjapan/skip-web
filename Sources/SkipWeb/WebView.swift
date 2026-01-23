@@ -272,25 +272,10 @@ struct WebViewClient : android.webkit.WebViewClient {
 }
 
 struct PermissiveWebChromeClient : android.webkit.WebChromeClient {
-    override init() {
-        super.init()
-        logger.log("PermissiveWebChromeClient: initialized")
-    }
-    
     override func onPermissionRequest(request: PermissionRequest) {
-        logger.log("WebChromeClient: onPermissionRequest for resources: \(request.getResources())")
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             request.grant(request.getResources())
         }
-    }
-    
-    override func onConsoleMessage(consoleMessage: android.webkit.ConsoleMessage) -> Bool {
-        logger.log("JS Console [\(consoleMessage.messageLevel())]: \(consoleMessage.message()) at \(consoleMessage.sourceId()):\(consoleMessage.lineNumber())")
-        return true
-    }
-    
-    override func onProgressChanged(view: PlatformWebView, newProgress: Int) {
-        logger.log("WebChromeClient: progress \(newProgress)%")
     }
 }
 
@@ -305,20 +290,19 @@ extension WebView : ViewRepresentable {
     }
 
     @MainActor private func setupWebView(_ webEngine: WebEngine) -> WebEngine {
-        // configure JavaScript
+        // configure JavaScript - hardcoded to match working sample exactly
         #if SKIP
         let settings = webEngine.webView.settings
-        settings.setJavaScriptEnabled(config.javaScriptEnabled)
+        settings.setJavaScriptEnabled(true)
 
-        if (config.customUserAgent != nil ) {
-          settings.setUserAgentString(config.customUserAgent)
-        }
-
+        webEngine.webView.setWebViewClient(android.webkit.WebViewClient())
         webEngine.webView.setWebChromeClient(PermissiveWebChromeClient())
 
-        webEngine.webView.setBackgroundColor(0x000000)
-        webEngine.webView.addJavascriptInterface(MessageHandlerRouter(webEngine: webEngine), "skipWebAndroidMessageHandler")
-        webEngine.engineDelegate = WebEngineDelegate(webEngine.configuration, android.webkit.WebViewClient())
+        // Match working sample - ensure WebView fills parent
+        webEngine.webView.setLayoutParams(android.view.ViewGroup.LayoutParams(
+            android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+            android.view.ViewGroup.LayoutParams.MATCH_PARENT
+        ))
 
         //settings.setAlgorithmicDarkeningAllowed(boolean allow)
         //settings.setAllowContentAccess(boolean allow)
