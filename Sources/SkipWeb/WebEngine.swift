@@ -368,9 +368,8 @@ public class WebEngineDelegate : android.webkit.WebViewClient {
         let reason = errorResponse.getReasonPhrase() ?? "nil"
         let mime = errorResponse.getMimeType() ?? "nil"
         let encoding = errorResponse.getEncoding() ?? "nil"
-        let headers = errorResponse.getResponseHeaders() ?? [:]
         
-        logger.log("onReceivedHttpError url=\(url) method=\(method) mainFrame=\(isMainFrame) status=\(statusCode) reason=\(reason) mime=\(mime) encoding=\(encoding) headers=\(headers)")
+        logger.log("onReceivedHttpError url=\(url) method=\(method) mainFrame=\(isMainFrame) status=\(statusCode) reason=\(reason) mime=\(mime) encoding=\(encoding)")
                  
         webViewClient.onReceivedHttpError(view, request, errorResponse)
     }
