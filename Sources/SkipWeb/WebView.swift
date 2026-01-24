@@ -263,12 +263,7 @@ struct WebViewClient : android.webkit.WebViewClient {
             logger.log("Override URL loading for \(url)")
         }
         return result
-    }
-    
-    override func onReceivedSslError(view: PlatformWebView, handler: android.webkit.SslErrorHandler, error: android.net.http.SslError) {
-      logger.log("SSL error \(error.getPrimaryError()) for \(error.getUrl())")
-      handler.proceed()
-    }
+    }    
 }
 
 struct PermissiveWebChromeClient : android.webkit.WebChromeClient {
