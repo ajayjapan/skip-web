@@ -299,7 +299,10 @@ extension WebView : ViewRepresentable {
         #if SKIP
         let settings = webEngine.webView.settings
         settings.setJavaScriptEnabled(config.javaScriptEnabled)
-
+        settings.setSafeBrowsingEnabled(false)
+        settings.setAllowContentAccess(true)
+        settings.setAllowFileAccess(true)
+        settings.setDomStorageEnabled(true)
         if (config.customUserAgent != nil) {
             settings.setUserAgentString(config.customUserAgent)
         }
