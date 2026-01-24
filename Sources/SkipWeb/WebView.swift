@@ -303,10 +303,11 @@ extension WebView : ViewRepresentable {
         settings.setAllowContentAccess(true)
         settings.setAllowFileAccess(true)
         settings.setDomStorageEnabled(true)
-        if (config.customUserAgent != nil) {
+        if (config.customUserAgent != nil ) {
             settings.setUserAgentString(config.customUserAgent)
         }
-
+        webEngine.webView.setBackgroundColor(0x000000) // prevents screen flashing: https://issuetracker.google.com/issues/314821744
+        webEngine.webView.addJavascriptInterface(MessageHandlerRouter(webEngine: webEngine), "skipWebAndroidMessageHandler")
         webEngine.webView.setWebViewClient(android.webkit.WebViewClient())
         webEngine.webView.setWebChromeClient(PermissiveWebChromeClient())
 
