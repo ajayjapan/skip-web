@@ -303,7 +303,7 @@ extension WebView : ViewRepresentable {
         }
         webEngine.webView.setBackgroundColor(0x000000) // prevents screen flashing: https://issuetracker.google.com/issues/314821744
         webEngine.webView.addJavascriptInterface(MessageHandlerRouter(webEngine: webEngine), "skipWebAndroidMessageHandler")
-        webEngine.webView.setWebViewClient(android.webkit.WebViewClient())
+        webEngine.engineDelegate = WebEngineDelegate(webEngine.configuration, WebViewClient(webView: self))
         webEngine.webView.setWebChromeClient(PermissiveWebChromeClient())
 
         // Match working sample - ensure WebView fills parent
