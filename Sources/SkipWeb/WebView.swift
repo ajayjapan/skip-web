@@ -295,10 +295,14 @@ extension WebView : ViewRepresentable {
     }
 
     @MainActor private func setupWebView(_ webEngine: WebEngine) -> WebEngine {
-        // configure JavaScript - hardcoded to match working sample exactly
+        // configure JavaScript
         #if SKIP
         let settings = webEngine.webView.settings
-        settings.setJavaScriptEnabled(true)
+        settings.setJavaScriptEnabled(config.javaScriptEnabled)
+
+        if (config.customUserAgent != nil) {
+            settings.setUserAgentString(config.customUserAgent)
+        }
 
         webEngine.webView.setWebViewClient(android.webkit.WebViewClient())
         webEngine.webView.setWebChromeClient(PermissiveWebChromeClient())
