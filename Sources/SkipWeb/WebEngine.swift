@@ -361,16 +361,7 @@ public class WebEngineDelegate : android.webkit.WebViewClient {
 
     /// Notify the host application that an HTTP error has been received from the server while loading a resource.
     override func onReceivedHttpError(view: PlatformWebView, request: android.webkit.WebResourceRequest, errorResponse: android.webkit.WebResourceResponse) {
-        let url = request.getUrl()?.toString() ?? "nil"
-        let method = request.getMethod() ?? "nil"
-        let isMainFrame = request.isForMainFrame()
-        let statusCode = errorResponse.getStatusCode()
-        let reason = errorResponse.getReasonPhrase() ?? "nil"
-        let mime = errorResponse.getMimeType() ?? "nil"
-        let encoding = errorResponse.getEncoding() ?? "nil"
-        
-        logger.log("onReceivedHttpError url=\(url) method=\(method) mainFrame=\(isMainFrame) status=\(statusCode) reason=\(reason) mime=\(mime) encoding=\(encoding)")
-                 
+        logger.log("onReceivedHttpError: \(request) \(errorResponse)")
         webViewClient.onReceivedHttpError(view, request, errorResponse)
     }
 
