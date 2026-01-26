@@ -298,6 +298,7 @@ extension WebView : ViewRepresentable {
         settings.setAllowContentAccess(true)
         settings.setAllowFileAccess(true)
         settings.setDomStorageEnabled(true)
+        settings.setMediaPlaybackRequiresUserGesture(false)
         if (config.customUserAgent != nil ) {
             settings.setUserAgentString(config.customUserAgent)
         }
